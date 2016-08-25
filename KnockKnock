@@ -1,0 +1,47 @@
+import random
+
+#Prompt for name
+name = raw_input("Hello, There! What's your name?\n")
+
+#Tuple for joke names
+jokeName = ("Yah", "Ho-Ho", "Scold", "Double", "Yoda Lady")
+
+#Tuple for punchlines
+punchline = ("Noo! Thanks I use Google",
+             "You know, your Santa impressions could use a little work",
+             "Scold outside. Let me in!",
+             "W",
+             "Good job yodeling!")
+
+#Determine which joke to tell
+jokeNumber = random.randint(0,4)
+
+#Respond with name
+print "I've got a great joke for you, %s:" % name 
+
+#Iterating Knock Knock looking for "Who's there?"
+reply = raw_input("Knock! Knock!\n")
+if (reply.lower() != "who's there?" and reply.lower() != "whos there?" and
+    reply.lower() != "who's there" and reply.lower() != "whos there"):
+    reply = raw_input("""Pssst. You're supposed to ask "Who's there?"!\nKnock! Knock!\n""")
+    
+    if (reply.lower() != "who's there?" and reply.lower() != "whos there?" and
+        reply.lower() != "who's there" and reply.lower() != "whos there"):
+        reply = raw_input("This isn't so hard. Please try again.\nKnock! Knock!\n")
+        
+        if (reply.lower() != "who's there?" and reply.lower() != "whos there?" and
+            reply.lower() != "who's there" and reply.lower() != "whos there"):
+            print "You're clearly not getting this...\nWho's there?"
+
+reply2 = raw_input("%s\n" % jokeName[jokeNumber])
+if (reply2.lower() != jokeName[jokeNumber].lower() + " who?" and
+    reply2.lower() != jokeName[jokeNumber].lower() + " who"):
+    reply2 = raw_input('This is when you ask "' + jokeName[jokeNumber] + ' Who?"\n')
+    if (reply2.lower() != jokeName[jokeNumber].lower() + " who?" and
+        reply2.lower() != jokeName[jokeNumber].lower() + " who"):
+        reply2 = raw_input("C'mon now. Try again!\n")
+        if (reply2.lower() != jokeName[jokeNumber].lower() + " who?" and
+            reply2.lower() != jokeName[jokeNumber].lower() + " who"):
+            print "So close... \n" + jokeName[jokeNumber] + " who?"
+    
+print punchline[jokeNumber]
