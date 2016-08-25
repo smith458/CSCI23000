@@ -1,0 +1,43 @@
+#Input Statements
+price = input('Price of the item:\n') * 100  #Requests price and converts to pennies
+cash = input('Cash Tendered:\n') * 100       #Requests amount paid and converts to pennies
+
+#Calculations
+change_i = (cash - price)
+
+twenties = change_i / 2000 #Calculated number of Twenties needed
+change   = change_i % 2000 #Reduced change remaining by number of Twenties
+
+tens   = change / 1000     #Calculated number of Tens needed
+change = change % 1000     #Reduced change remaining by number of Tens
+
+fives  = change / 500      #Calculated number of Fives needed
+change = change % 500      #Reduced change remaining by number of Fives
+
+ones   = change / 100      #Calculated number of Ones needed
+change = change % 100      #Reduced change remaining by number of Ones
+
+quarters = change / 25     #Calculated number of Quarters needed
+change   = change % 25     #Reduced change remaining by number of Quarters
+
+dimes  = change / 10       #Calculated number of Dimes needed
+change = change % 10       #Reduced change remaining by number of Dimes
+
+nickels = change / 5       #Calculated number of Nickels needed
+change  = change % 5       #Reduced change remaining by number of nickels
+
+pennies = change           #Calculated number of Pennies needed
+
+#Print Statements
+print '\n'
+print 'Change:      %10.2f' % (change_i / 100)
+print 'Change Left: %10d'   % change_i
+print 'Twenties:    %10d'   % twenties
+print 'Ten:         %10d'   % tens
+print 'Fives:       %10d'   % fives
+print 'Ones:        %10d'   % ones
+print 'Quarters:    %10d'   % quarters
+print 'Dimes:       %10d'   % dimes
+print 'Nickels:     %10d'   % nickels
+print 'Pennies:     %10d'   % pennies
+
