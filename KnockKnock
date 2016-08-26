@@ -33,6 +33,7 @@ if (reply.lower() != "who's there?" and reply.lower() != "whos there?" and
             reply.lower() != "who's there" and reply.lower() != "whos there"):
             print "You're clearly not getting this...\nWho's there?"
 
+#Iterating Joke Name looking for "jokeName who?"
 reply2 = raw_input("%s\n" % jokeName[jokeNumber])
 if (reply2.lower() != jokeName[jokeNumber].lower() + " who?" and
     reply2.lower() != jokeName[jokeNumber].lower() + " who"):
@@ -43,5 +44,6 @@ if (reply2.lower() != jokeName[jokeNumber].lower() + " who?" and
         if (reply2.lower() != jokeName[jokeNumber].lower() + " who?" and
             reply2.lower() != jokeName[jokeNumber].lower() + " who"):
             print "So close... \n" + jokeName[jokeNumber] + " who?"
-    
+
+#Print Punchline    
 print punchline[jokeNumber]
