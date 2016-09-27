@@ -1,6 +1,6 @@
 #Input Statements
-price = input('Price of the item:\n') * 100  #Requests price and converts to pennies
-cash = input('Cash Tendered:\n') * 100       #Requests amount paid and converts to pennies
+price = int(float(input('Price of the item:\n')) * 100)  #Requests price and converts to pennies
+cash = int(float(input('Cash Tendered:\n')) * 100)       #Requests amount paid and converts to pennies
 
 #Calculations
 change_i = (cash - price)
@@ -29,15 +29,14 @@ change  = change % 5       #Reduced change remaining by number of nickels
 pennies = change           #Calculated number of Pennies needed
 
 #Print Statements
-print '\n'
-print 'Change:      %10.2f' % (change_i / 100)
-print 'Change Left: %10d'   % change_i
-print 'Twenties:    %10d'   % twenties
-print 'Ten:         %10d'   % tens
-print 'Fives:       %10d'   % fives
-print 'Ones:        %10d'   % ones
-print 'Quarters:    %10d'   % quarters
-print 'Dimes:       %10d'   % dimes
-print 'Nickels:     %10d'   % nickels
-print 'Pennies:     %10d'   % pennies
-
+print('\n')
+print('Change:      %10.2f' % (change_i / 100))
+print('Change Left: %10d'   % change_i)
+print('Twenties:    %10d'   % twenties)
+print('Ten:         %10d'   % tens)
+print('Fives:       %10d'   % fives)
+print('Ones:        %10d'   % ones)
+print('Quarters:    %10d'   % quarters)
+print('Dimes:       %10d'   % dimes)
+print('Nickels:     %10d'   % nickels)
+print('Pennies:     %10d'   % pennies)
