@@ -4,12 +4,12 @@ def main():
     if game == "p":
         pick()
     elif game == "g":
-        guess()
+        guess_num()
     else:
         print "Well that wasnt an option...\n"
         main()
 
-def guess():
+def guess_num():
     import random
     
     print ("I'm thinking of a number between 1 and 100.\n" +
@@ -31,8 +31,8 @@ def guess():
         else:
             print "You got it!\n"
             guessRight = "true"
-    
     print "It took %d turns" % counter
+    replay_prompt(guess_num)
 
 def pick():
     guess = 64
@@ -63,12 +63,15 @@ def pick():
             print "Hmmm... That wasn't one of the options. Let's try again.\n"
             counter = counter - 1
     print ("I got it! it took %d turns." % counter)
+    replay_prompt(pick)
+
+def replay_prompt(game):
     replay = raw_input("Do you want to play again?\n(y)es, (n)o, or (m)enu?\n")
     if replay == "y":
-        pick()
+        game()
     elif replay == "m":
         main()
     else:
-        print "Bye!"
+        print "Bye! Thanks for playing!"
 
 main()
