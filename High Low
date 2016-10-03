@@ -1,77 +1,86 @@
 
+#Main function to let you pick game
 def main():
-    game = raw_input("Do you want to (p)ick a number or (g)uess a number?\n")
+    game = input("Do you want to (p)ick a number or (g)uess a number?\n")
     if game == "p":
         pick()
     elif game == "g":
         guess_num()
     else:
-        print "Well that wasnt an option...\n"
+        print("Well that wasnt an option...\n")
         main()
 
+#Game that allows the user to guess a number
 def guess_num():
     import random
     
-    print ("I'm thinking of a number between 1 and 100.\n" +
-           "Guess a number, and I'll tell you if you're\n" +
-           "too high, too low, or go it right.\n" +
-           "Best of luck to you!")
+    print("I'm thinking of a number between 1 and 100.\n" +
+          "Guess a number, and I'll tell you if you're\n" +
+          "too high, too low, or go it right.\n" +
+          "Best of luck to you!")
 
     counter = 0
     number = random.randint(1,100)
     guessRight = "false"
-    
+
+    #Feedback loop for guessing
     while (guessRight == "false"):
         counter = counter + 1
-        guess = input("%d) Please enter a number.\n" % counter)
+        guess = int(input("%d) Please enter a number.\n" % counter))
         if guess < number:
-            print "Too low!\n"
+            print("Too low!\n")
         elif guess > number:
-            print "Too High!\n"
+            print("Too High!\n")
         else:
-            print "You got it!\n"
+            print("You got it!\n")
             guessRight = "true"
-    print "It took %d turns" % counter
+    print("It took %d turns" % counter)
     replay_prompt(guess_num)
 
+#Game that allows the user to pick a number
 def pick():
+    
+    #Initial variables for guessing logic
     guess = 64
     guessRight = "false"
     counter = 0
-    upperBound = 100
+    upperBound = 127
     lowerBound = 1
-    print ("Please think of a number between one and\n" +
-           "one hundered. I'll guess your number. You\n" +
-           "tell me if I'm too high, too low, or correct.\n")
-    
+    print("Please think of a number between one and\n" +
+          "one hundered. I'll guess your number. You\n" +
+          "tell me if I'm too high, too low, or correct.\n")
+
+    #Feedback loop for guessing
     while guessRight == "false":
         counter = counter + 1
-        print ("I guess: %d" % guess)
-        response = raw_input("too (h)igh, too (l)ow, or (c)orrect?\n")
+        print("I guess: %d" % guess)
+        response = input("too (h)igh, too (l)ow, or (c)orrect?\n")
         if response == "h":
             upperBound = guess
             guess = (upperBound + lowerBound) / 2
         elif response == "l":
-            if guess == 99:
+            lowerBound = guess
+            guess = (upperBound + lowerBound) / 2
+            if guess > 100:
                 guess = 100
-            else:
-                lowerBound = guess
-                guess = (upperBound + lowerBound) / 2
         elif response == "c":
             guessRight = "true"
         else:
-            print "Hmmm... That wasn't one of the options. Let's try again.\n"
+            print("Hmmm... That wasn't one of the options. Let's try again.\n")
             counter = counter - 1
-    print ("I got it! it took %d turns." % counter)
+    print("I got it! it took %d turns." % counter)
     replay_prompt(pick)
 
+#Prompt for replay
 def replay_prompt(game):
-    replay = raw_input("Do you want to play again?\n(y)es, (n)o, or (m)enu?\n")
+    replay = input("Do you want to play again?\n(y)es, (n)o, or (m)enu?\n")
     if replay == "y":
         game()
     elif replay == "m":
         main()
     else:
-        print "Bye! Thanks for playing!"
+        print("Bye! Thanks for playing!")
 
+#Calls main function to run
 main()
+
