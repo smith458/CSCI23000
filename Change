@@ -1,6 +1,6 @@
 #Input Statements
-price = int(float(input('Price of the item:\n')) * 100)  #Requests price and converts to pennies
-cash = int(float(input('Cash Tendered:\n')) * 100)       #Requests amount paid and converts to pennies
+price = int(round(float(input('Price of the item:\n')) * 100))  #Requests price and converts to pennies
+cash = int(round(float(input('Cash Tendered:\n')) * 100))       #Requests amount paid and converts to pennies
 
 #Calculations
 change_i = (cash - price)
@@ -40,3 +40,4 @@ print('Quarters:    %10d'   % quarters)
 print('Dimes:       %10d'   % dimes)
 print('Nickels:     %10d'   % nickels)
 print('Pennies:     %10d'   % pennies)
+
