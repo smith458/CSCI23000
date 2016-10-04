@@ -1,0 +1,59 @@
+import random
+
+alpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+key =   "XPMGTDHLYONZBWEARKJUFSCIQV"
+
+def main():
+    keepGoing = True
+    while keepGoing:
+        response = menu()
+        if response == "0":
+            print("But spies never quit....")
+            keepGoing = False
+        elif response == "1":
+            plain = input("Text to be encoded: ")
+            print(encode(plain))
+        elif response == "2":
+            coded = input("Code to be decyphered: ")
+            print(decode(coded))
+        elif response == "3":
+            newKey()
+        else:
+            print("Hmmm... That wasnt an option: ")
+        
+def menu():
+    print("\nSECRET DECODER MENU\n")
+    print("0) Quit")
+    print("1) Encode")
+    print("2) Decode")
+    print("3) Generate New Key\n")
+    response = input("What do you want to do? ")
+    return response
+
+def encode(str):
+    newStr = ""
+    str = str.upper()
+    for x in range(0, len(str)):
+        if str[x] in alpha:
+            newStr += key[alpha.index(str[x])]
+    return newStr
+
+def decode(str):
+    newStr = ""
+    str = str.upper()
+    for x in range(0, len(str)):
+        if str[x] in alpha:
+            newStr += alpha[key.index(str[x])]
+    return newStr
+
+def newKey():
+    global key
+    newStr = ""
+    index = -1
+    for x in range(0, len(key)):
+        while (index < 0 or alpha[index] in newStr):
+            index = random.randint(0,25)
+        newStr += alpha[index]
+    key = newStr
+        
+main()
