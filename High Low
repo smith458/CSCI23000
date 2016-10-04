@@ -1,3 +1,4 @@
+import random
 
 #Main function to let you pick game
 def main():
@@ -12,8 +13,6 @@ def main():
 
 #Game that allows the user to guess a number
 def guess_num():
-    import random
-    
     print("I'm thinking of a number between 1 and 100.\n" +
           "Guess a number, and I'll tell you if you're\n" +
           "too high, too low, or go it right.\n" +
@@ -83,4 +82,3 @@ def replay_prompt(game):
 
 #Calls main function to run
 main()
-
