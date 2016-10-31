@@ -10,11 +10,14 @@ COMP = 2
 playerDeck = [0] * NUMCARDS
 compDeck = [0] * NUMCARDS
 suitName = ("hearts", "diamonds", "spades", "clubs")
+suitU = ("\u2665", "\u2666", "\u2660", "\u2663")
 rankName = ("Two", "Three", "Four", "Five", "Six", "Seven", "Eight",
             "Nine", "Ten", "Jack", "Queen", "King", "Ace")
+rankAbr = ("2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A")
 playerName = ("deck", "player", "computer")
 
 def main():
+    print("Welcome to War!")
     clearDeck()
     dealCards()
     while (max(playerDeck) > 0) and (max(compDeck) > 0):
@@ -22,7 +25,7 @@ def main():
         displayCount()
         draw(0)
     if max(playerDeck) > 0:
-        print("You Win!")
+        print("Congratulations! You Win!")
     else:
         print("I win!")
 
@@ -57,7 +60,7 @@ def dealCards():
             
 #Gives the name of the card based on index in Deck
 def cardName(loc):
-    name = rankName[loc % 13] + " of " + suitName[int(loc / 13)]
+    name = rankAbr[loc % 13] + suitU[int(loc / 13)]
     return name
 
 #Each player presents a card. They are compared and the
@@ -69,8 +72,8 @@ def draw(warCount):
     playerRank = playerCard % 13
     compCard = compDeck.index(cardCount)
     compRank = compCard % 13
-    print("Players   Card: %s" % cardName(playerCard))
-    print("Computers Card: %s" % cardName(compCard))
+    print("Player's   Card: %s" % cardName(playerCard))
+    print("Computer's Card: %s" % cardName(compCard))
     
     if playerRank > compRank:
         print("You take the cards!")
@@ -116,3 +119,4 @@ def displayCount():
     print("Computer: %d" % compCards)
 
 main()
+
