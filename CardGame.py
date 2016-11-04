@@ -35,7 +35,7 @@ def assignCard(player):
 
 def showDeck():
     print(" Location of all Cards")
-    print(" #  Card               Location")
+    print(" #    Card             Location")
     for i in range(NUMCARDS):
         print("%2d  %17s  %6s" % (i, cardName(i), playerName[cardLoc[i]]))
         
