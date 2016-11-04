@@ -119,4 +119,3 @@ def displayCount():
     print("Computer: %d" % compCards)
 
 main()
-
