@@ -2,10 +2,19 @@ from tkinter import *
 from tkinter import ttk
 
 def createEntries(parent, names, values):
-    for x in range(len(names)):
-        Label(parent, text=names[x]).grid(row=x, column=0)
-        values[x] = Entry(parent)
-        values[x].grid(row=x, column=1)
+    values = {}
+    for name in names:
+        lab = Label(parent, text=name)
+        lab.pack()
+        ent = Entry(parent)
+        ent.pack()
+        values[name] = ent
+    return values
+
+def submit(values):
+    for x in values:
+        values[x].get()
+        print(values[x])
     return values
 
 def main():
@@ -36,6 +45,8 @@ def main():
 
     valueSkills = createEntries(tab2, skills, valueSkills)
     print(valueSkills)
+
+    #Button(tab2, text="Submit", command=lambda: submit(valueSkills)).grid(column=1, row=6)
 
     root.mainloop()
     
