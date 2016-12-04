@@ -1,4 +1,4 @@
-rom tkinter import *
+from tkinter import *
 from tkinter import ttk
 import time
 
@@ -13,14 +13,15 @@ class Timer(object):
         self.hours = StringVar()
         self.hours.set("00")
         self.mins = StringVar()
-        self.mins.set("00")
+        self.mins.set("05")
         self.secs = StringVar()
-        self.secs.set("00")
+        self.secs.set("00.0")
         self.startStop = StringVar()
         self.startStop.set("Start")
         self.delay = 100
         self.startTime = 0
         self.iteration = ""
+        self.timeSet = 0
         self.timeRunning = "False"
 
         #Interface Construction
@@ -37,10 +38,11 @@ class Timer(object):
 
     def startStopButton(self):
         if self.timeRunning=="False":
-            self.hoursSet = int(self.hours.get())
-            self.minsSet = int(self.mins.get())
-            self.secsSet = float(self.secs.get())
-            self.timeSet = self.hoursSet * 3600 + self.minsSet * 60 + self.secsSet
+            if self.timeSet == 0:
+                self.hoursSet = int(self.hours.get())
+                self.minsSet = int(self.mins.get())
+                self.secsSet = float(self.secs.get())
+                self.timeSet = self.hoursSet * 3600 + self.minsSet * 60 + self.secsSet
             self.countTime()
             self.startStop.set("Stop")
         else:
@@ -53,15 +55,14 @@ class Timer(object):
         if self.startTime == 0:
             self.startTime = time.time()
         elif self.timeRunning == "False":
-            self.startTime -= time.time() - self.currentTime
+            self.startTime = time.time() - self.elapsedTime
         self.timeRunning = "True"
         self.currentTime = time.time()
-        
         self.elapsedTime = self.currentTime - self.startTime
         self.timeLeft = self.timeSet - self.elapsedTime
         self.hoursLeft = str(int(self.timeLeft / 3600)).zfill(2)
         self.minsLeft = str(int(self.timeLeft % 3600 / 60)).zfill(2)
-        self.secsLeft = str(round(self.timeLeft % 60, 1)).zfill(3)
+        self.secsLeft = str(round(self.timeLeft % 60, 1)).zfill(4)
         self.hours.set(self.hoursLeft)
         self.mins.set(self.minsLeft)
         self.secs.set(self.secsLeft)
@@ -71,7 +72,10 @@ class Timer(object):
         #stop button pressed
         self.parent.after_cancel(self.iteration)
         self.startTime = 0
-        self.count.set("00:00:00")
+        self.hours.set(str(self.hoursSet).zfill(2))
+        self.mins.set(str(self.minsSet).zfill(2))
+        self.secs.set(str(self.secsSet).zfill(4))
+        self.timeSet = 0
         self.timeRunning = "False"
         self.startStop.set("Start")
 
