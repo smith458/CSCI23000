@@ -2,6 +2,14 @@ from tkinter import *
 from tkinter import ttk
 import time
 
+class entryVar(StringVar):
+    def __init__(self, default="", name="", limit="60"):
+        StringVar.__init__(self)
+        self.default = default
+        self.set(self.default)
+        self.name = name
+        self.limit = limit
+
 class Timer(object):
     def __init__(self, master):
         #Tab Construction
@@ -10,12 +18,9 @@ class Timer(object):
         master.add(self.parent, text="Timer")
 
         #Control Variables
-        self.hours = StringVar()
-        self.hours.set("00")
-        self.mins = StringVar()
-        self.mins.set("05")
-        self.secs = StringVar()
-        self.secs.set("00.0")
+        self.hours = entryVar(default="00")
+        self.mins = entryVar(default="05")
+        self.secs = entryVar(default="00.0")
         self.startStop = StringVar()
         self.startStop.set("Start")
         self.delay = 100
@@ -66,7 +71,14 @@ class Timer(object):
         self.hours.set(self.hoursLeft)
         self.mins.set(self.minsLeft)
         self.secs.set(self.secsLeft)
-        self.iteration = self.parent.after(self.delay, self.countTime)
+        if self.timeLeft > 0:
+            self.iteration = self.parent.after(self.delay, self.countTime)
+        else:
+            self.alert("Time is up!")
+
+    def alert(self, message):
+        messagebox.showwarning(message, message)
+        self.resetButton()
 
     def resetButton(self):
         #stop button pressed
