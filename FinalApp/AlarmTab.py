@@ -18,14 +18,11 @@ class Alarm(object):
         
         self.amPmOpt = ["AM", "PM"]
 
-        self.HOUR = 3600
-        self.MINUTE = 60
-
         self.hours = StringVar()
         self.hours.set(self.hoursOpt[0])
-        self.mins = entryVar()
+        self.mins = StringVar()
         self.mins.set(self.minsOpt[0])
-        self.amPm = entryVar()
+        self.amPm = StringVar()
         self.amPm.set(self.amPmOpt[0])
         self.startStop = StringVar()
         self.startStop.set("Set")
@@ -57,7 +54,6 @@ class Alarm(object):
                 self.hoursSet += 12
                 if self.hoursSet == 24:
                     self.hoursSet == 0
-            self.alarmSet = self.hoursSet * self.HOUR + self.minsSet * self.MINUTE
             self.checkingAlarm = "True"
             self.startStop.set("Cancel")
             self.checkTime()
@@ -69,12 +65,11 @@ class Alarm(object):
     def checkTime(self):
         #Checks to see if alarm time has been reached
         now = time.localtime()
-        self.todaySecs = now[3] * self.HOUR + now[4] * self.MINUTE + now[5]
-        if (self.todaySecs > self.alarmSet) and (
-            self.todaySecs - self.alarmSet < self.MINUTE):
+        if (self.hoursSet == now[3]) and (self.minsSet == now[4]):
             self.parent.after_cancel(self.iteration)
             self.Alarm("Alarm!")
-        self.iteration = self.parent.after(self.delay, self.checkTime)
+        else:
+            self.iteration = self.parent.after(1000, self.checkTime)
 
     def Alarm(self, message):
         messagebox.showwarning(message, message)
