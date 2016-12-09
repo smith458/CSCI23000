@@ -11,14 +11,17 @@ class TimeTab(object):
 
     def disableFields(self, onOff):
         for child in self.mainframe.winfo_children(): child.grid_configure(padx=5, pady=5)
-        
+
+    def toggleEntry(self, onOff):
+        for id in self.entries:
+            id.config(state=onOff)
 
 class entryVar(StringVar):
-    def __init__(self, default="", name="", limit="60"):
+    def __init__(self, default="", entry="", limit="60"):
         StringVar.__init__(self)
         self.default = default
         self.set(self.default)
-        self.name = name
+        self.entry = entry
         self.limit = limit
 
 class Stopwatch(TimeTab):
@@ -43,7 +46,6 @@ class Stopwatch(TimeTab):
         Label(tab1, textvariable=self.count).grid(row=0, column=0)
         Button(tab1, textvariable=self.startStop, command=self.startStopButton).grid(row=1, column=0)
         Button(tab1, text="Reset", command=self.resetButton).grid(row=1, column=1)
-        print(self.parent.winfo_children)
 
     #Method that runs when the Start/Stop Button is pressed
     def startStopButton(self):
@@ -79,7 +81,7 @@ class Stopwatch(TimeTab):
         self.timeRunning = "False"
         self.startStop.set("Start")
 
-class Timer(object):
+class Timer(TimeTab):
     def __init__(self, master):
         #Tab Construction
         tab2 = ttk.Frame(master)
@@ -99,33 +101,41 @@ class Timer(object):
         self.timeRunning = "False"
 
         #Interface Construction
-        self.hoursEntry = Entry(tab2, textvariable=self.hours, width=3)
-        self.hoursEntry.grid(row=0, column=0)
+        self.hours.entry = Entry(tab2, textvariable=self.hours, width=3)
+        self.hours.entry.grid(row=0, column=0)
         Label(tab2, text=":").grid(row=0, column=1)
-        self.minsEntry = Entry(tab2, textvariable=self.mins, width=3)
-        self.minsEntry.grid(row=0, column=2)
+        self.mins.entry = Entry(tab2, textvariable=self.mins, width=3)
+        self.mins.entry.grid(row=0, column=2)
         Label(tab2, text=":").grid(row=0, column=3)
-        self.secsEntry = Entry(tab2, textvariable=self.secs, width=4)
-        self.secsEntry.grid(row=0, column=4)
+        self.secs.entry = Entry(tab2, textvariable=self.secs, width=4)
+        self.secs.entry.grid(row=0, column=4)
         Button(tab2, textvariable=self.startStop, command=self.startStopButton).grid()
         Button(tab2, text="Reset", command=self.resetButton).grid()
 
+        self.entries = [self.hours.entry, self.mins.entry, self.secs.entry]
+        for id in self.entries:
+            id.config(disabledforeground="#444444")
+            id.config(disabledbackground="#CCCCCC")
+
     def startStopButton(self):
+        #start button pressed
         if self.timeRunning=="False":
             if self.timeSet == 0:
                 self.hoursSet = int(self.hours.get())
                 self.minsSet = int(self.mins.get())
                 self.secsSet = float(self.secs.get())
                 self.timeSet = self.hoursSet * 3600 + self.minsSet * 60 + self.secsSet
+            self.toggleEntry("disabled")
             self.countTime()
             self.startStop.set("Stop")
         else:
             self.parent.after_cancel(self.iteration)
             self.timeRunning = "False"
+            self.toggleEntry("normal")
             self.startStop.set("Start")
 
     def countTime(self):
-        #start button pressed
+        #Counts down the timer
         if self.startTime == 0:
             self.startTime = time.time()
         elif self.timeRunning == "False":
@@ -159,13 +169,9 @@ class Timer(object):
         self.timeSet = 0
         self.timeRunning = "False"
         self.startStop.set("Start")
+        self.toggleEntry("normal")
 
-    def toggleEntry(self):
-        self.secsEntry = 0
-        self.secsEntry = 0
-        self.secsEntry = 0
-
-class Alarm(object):
+class Alarm(TimeTab):
     def __init__(self, master):
         #Tab Construction
         tab3 = ttk.Frame(master)
@@ -194,19 +200,21 @@ class Alarm(object):
         self.checkingAlarm = "False"
 
         #Interface Construction
-        self.hoursEntry = OptionMenu(tab3, self.hours, *self.hoursOpt)
-        self.hoursEntry.grid(row=0, column=0)
+        self.hours.entry = OptionMenu(tab3, self.hours, *self.hoursOpt)
+        self.hours.entry.grid(row=0, column=0)
         Label(tab3, text=":").grid(row=0, column=1)
         
-        self.minsEntry = OptionMenu(tab3, self.mins, *self.minsOpt)
-        self.minsEntry.grid(row=0, column=2)
+        self.mins.entry = OptionMenu(tab3, self.mins, *self.minsOpt)
+        self.mins.entry.grid(row=0, column=2)
         Label(tab3, text=":").grid(row=0, column=3)
         
-        self.secsEntry = OptionMenu(tab3, self.amPm, *self.amPmOpt)
-        self.secsEntry.grid(row=0, column=4)
+        self.amPm.entry = OptionMenu(tab3, self.amPm, *self.amPmOpt)
+        self.amPm.entry.grid(row=0, column=4)
         
         Button(tab3, textvariable=self.startStop, command=self.startStopButton).grid()
 
+        self.entries = [self.hours.entry, self.mins.entry, self.amPm.entry]
+        
     def startStopButton(self):
         #Start button pressed
         if self.checkingAlarm == "False":
@@ -219,9 +227,11 @@ class Alarm(object):
                     self.hoursSet == 0
             self.checkingAlarm = "True"
             self.startStop.set("Cancel")
+            self.toggleEntry("disabled")
             self.checkTime()
         else:
             self.parent.after_cancel(self.iteration)
+            self.toggleEntry("normal")
             self.checkingAlarm = "False"
             self.startStop.set("Set")
 
@@ -252,4 +262,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
